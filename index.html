@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aurea Immobiliare · Vendi casa, ti regaliamo un anno all'Urbe</title>
+<meta name="description" content="Vendi casa con Aurea Immobiliare, o segnalaci chi vende: ti regaliamo un anno di abbonamento all'Urbe Roma.">
+<meta name="theme-color" content="#0d0d0d">
+<meta name="robots" content="noindex, nofollow"><!-- bozza: togliere quando va online col dominio vero -->
+<link rel="icon" href="img/aurea-simbolo.png">
+<!-- BOZZA 25/11/2026, stile Aurea (cobalto, nero, bianco; barra cobalto come nelle scritte dei video). Testi del 20/11 con il nome Aurea al posto di iHouse.
+     BOZZA 20/11/2026. Testi scritti da Claude per riserva (Argon fermo): da far riscrivere ad Argon.
+     Segnaposto da sostituire: numero WhatsApp, link regolamento, informativa privacy, P.IVA, invio del modulo. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-m.webp" type="image/webp" media="(max-width: 767px)">
+<link rel="preload" as="image" href="img/hero.webp" type="image/webp" media="(min-width: 768px)">
+<style>
+:root{
+  --nero:#0d0d0d; --nero-2:#161616; --nero-3:#222;
+  --bianco:#f4f4f2; --grigio:#a9abb0; --linea:rgba(244,244,242,.14);
+  --cobalto:#2b63c6; --cobalto-scuro:#2152a8; --cobalto-chiaro:#7ea3e6;
+  --serif:"Bodoni Moda", Didot, "Bodoni 72", Georgia, serif;
+  --sans:Figtree, "Avenir Next", system-ui, sans-serif;
+  --r:4px;
+  --g:clamp(16px,5vw,64px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--nero);color:var(--bianco);font:400 17px/1.55 var(--sans);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cobalto);outline-offset:3px}
+
+/* ---------- testata ---------- */
+.testata{position:absolute;inset:0 0 auto;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:18px var(--g)}
+.testata img{width:120px;height:auto}
+.testata a.tel{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:500;text-decoration:none;border-bottom:1px solid var(--linea);padding-bottom:2px}
+
+/* ---------- apertura ---------- */
+.apertura{position:relative;min-height:100dvh;display:grid;align-items:end;overflow:hidden;isolation:isolate}
+.apertura picture,.apertura picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+
+.apertura::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(13,13,13,.55) 0%,rgba(13,13,13,0) 22%,rgba(13,13,13,.15) 45%,rgba(13,13,13,.92) 78%,var(--nero) 100%)}
+@media (max-width:767px){   /* telefono: la foto sta in alto e si vede intera (lampada, poltrona, finestra), il testo sotto */
+  .apertura picture{bottom:auto;height:68svh}
+  .apertura picture img{object-position:15% 50%}
+  .apertura::after{background:linear-gradient(180deg,rgba(13,13,13,.5) 0%,rgba(13,13,13,0) 14%,rgba(13,13,13,0) 40%,rgba(13,13,13,.85) 58%,var(--nero) 68%)}
+}
+.apertura .testo{padding:0 var(--g) 40px;max-width:760px}
+.premio-tag{display:inline-block;background:var(--cobalto);color:#fff;font-size:14px;font-weight:600;padding:4px 10px;border-radius:var(--r);margin-bottom:18px}
+h1{font:400 clamp(40px,10.5vw,76px)/1.04 var(--serif);letter-spacing:-.01em}
+h1 em{font-style:italic}
+.apertura p{margin-top:16px;color:var(--grigio);font-size:18px;max-width:34ch}
+.bottone{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:26px;background:var(--cobalto);color:#fff;
+  font:600 17px/1 var(--sans);padding:18px 26px;border:0;border-radius:var(--r);text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:background .25s,transform .15s}
+.bottone:hover{background:var(--cobalto-scuro)}
+.bottone:active{transform:translateY(1px) scale(.99)}
+.bottone svg{width:18px;height:18px}
+
+/* ---------- le quattro strade ---------- */
+section{padding:72px var(--g)}
+h2{font:400 clamp(32px,8vw,52px)/1.08 var(--serif);letter-spacing:-.01em;max-width:18ch}
+h2 em{font-style:italic}
+/* la barra cobalto delle scritte dei video */
+h1,h2,.passo h3,.grazie h3,.prenotata h3{position:relative;padding-left:.42em}
+h1::before,h2::before,.passo h3::before,.grazie h3::before,.prenotata h3::before{content:"";position:absolute;left:0;top:.14em;bottom:.1em;width:max(4px,.075em);background:var(--cobalto)}
+.strade{display:grid;gap:12px;margin-top:32px;grid-template-columns:1fr 1fr}
+.strada{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;padding:18px;border-radius:var(--r);
+  text-align:left;color:var(--bianco);background:var(--nero-2);border:1px solid var(--linea);font:inherit;cursor:pointer;overflow:hidden;isolation:isolate;
+  transition:transform .2s,border-color .2s}
+.strada:hover{border-color:rgba(244,244,242,.4)}
+.strada:active{transform:scale(.985)}
+.strada b{font:500 22px/1.15 var(--serif);display:block}
+.strada span{display:block;margin-top:6px;font-size:14px;color:var(--grigio);line-height:1.4}
+.strada .freccia{position:absolute;top:16px;right:16px;width:22px;height:22px;opacity:.8}
+.strada.foto{grid-column:span 2;min-height:260px}
+.strada.foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.strada.foto:hover img{transform:scale(1.04)}
+.strada.foto::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(13,13,13,0) 30%,rgba(13,13,13,.9) 100%)}
+.strada.foto span{color:#dcdde0}
+.strada .premio{display:inline-block;font-style:normal;margin-top:10px;font-size:13px;font-weight:600;color:#fff;background:var(--cobalto);padding:3px 8px;border-radius:var(--r);width:max-content;max-width:100%;line-height:1.3}
+.strada.foto.mezza{grid-column:auto;min-height:220px}
+.strada.foto.mezza b{font-size:20px}
+.strada.foto.mezza::before{background:linear-gradient(180deg,rgba(13,13,13,.1) 15%,rgba(13,13,13,.92) 100%)}
+
+/* ---------- il regalo ---------- */
+.regalo{position:relative;background:#0d0d0d;overflow:hidden;isolation:isolate}
+.regalo::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.45;
+  background:url(img/pattern.svg) 0 0/360px 240px}
+.passi{list-style:none;margin-top:36px;display:grid;gap:28px;counter-reset:p}
+.passi li{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start}
+.passi li::before{counter-increment:p;content:counter(p);font:400 46px/1 var(--serif);color:var(--cobalto-chiaro)}
+.passi b{display:block;font-weight:600;font-size:18px}
+.passi span{color:var(--grigio);font-size:16px}
+.nota{margin-top:32px;font-size:14px;color:var(--grigio);max-width:60ch}
+.nota a{color:var(--bianco)}
+
+/* ---------- modulo ---------- */
+.modulo-wrap{max-width:640px}
+.modulo-wrap>p{color:var(--grigio);margin-top:12px}
+form{margin-top:30px;display:grid;gap:22px}
+fieldset{border:0}
+legend{font-size:15px;font-weight:500;margin-bottom:10px}
+.scelte{display:flex;flex-wrap:wrap;gap:8px}
+.scelte input{position:absolute;opacity:0;pointer-events:none}
+.scelte label{padding:11px 16px;border:1px solid var(--linea);border-radius:var(--r);font-size:15px;cursor:pointer;transition:all .2s;user-select:none}
+.scelte input:checked+label{background:var(--bianco);color:var(--nero);border-color:var(--bianco)}
+.scelte input:focus-visible+label{outline:2px solid var(--cobalto);outline-offset:2px}
+.campo{display:grid;gap:8px}
+.campo label{font-size:15px;font-weight:500}
+.campo small{color:var(--grigio);font-size:13px}
+.campo input,.campo textarea{width:100%;background:var(--nero-2);border:1px solid rgba(244,244,242,.28);border-radius:var(--r);
+  color:var(--bianco);font:400 17px/1.4 var(--sans);padding:15px 14px;transition:border-color .2s}
+.campo input::placeholder,.campo textarea::placeholder{color:#8d8f94}
+.campo input:focus,.campo textarea:focus{outline:none;border-color:var(--bianco)}
+.campo[hidden]{display:none}
+.errore{color:#ff8a80;font-size:14px;min-height:0}
+.consenso{display:grid;grid-template-columns:22px 1fr;gap:12px;font-size:14px;color:var(--grigio);align-items:start}
+.consenso input{width:20px;height:20px;accent-color:var(--cobalto);margin-top:2px}
+.invio{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.invio .bottone{margin-top:0}
+.wa{display:inline-flex;align-items:center;min-height:44px;font-size:15px;color:var(--bianco);text-decoration:none;border-bottom:1px solid var(--linea);padding-bottom:2px}
+.grazie{display:none;padding:28px;border:1px solid var(--linea);border-radius:var(--r);background:var(--nero-2);margin-top:30px}
+.grazie h3{font:400 30px/1.1 var(--serif)}
+.grazie p{color:var(--grigio);margin-top:10px}
+.inviato #contatto{display:none}.inviato .grazie{display:block}
+
+/* ---------- chi siamo ---------- */
+.chi{display:grid;gap:36px;border-top:1px solid var(--linea)}
+.chi .foto-chiavi{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3}
+.chi .foto-chiavi img{width:100%;height:100%;object-fit:cover}
+.chi p{color:var(--grigio);margin-top:14px;max-width:44ch}
+.servizi{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;list-style:none}
+.servizi li{font-size:14px;padding:7px 12px;border-radius:999px;background:var(--nero-3)}
+.indirizzo{margin-top:26px;font-size:16px;line-height:1.5}
+.indirizzo a{text-decoration:none;border-bottom:1px solid var(--cobalto)}
+
+.barra-telefono{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:20;display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:52px;padding:0 18px;background:var(--cobalto);color:#fff;border-radius:var(--r);font:500 15px var(--sans);text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.45);transform:translateY(calc(100% + 30px));transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.barra-telefono b{font-weight:600;white-space:nowrap}
+.barra-telefono.su{transform:none}
+@media (max-width:359px){.barra-telefono span{display:none}.barra-telefono{justify-content:center}}
+@media (min-width:768px){.barra-telefono{display:none}}
+@media (prefers-reduced-motion:reduce){.barra-telefono{transition:none}}
+.stima,.scheda,#contatti{scroll-margin-top:12px}
+footer{padding:40px var(--g) calc(40px + env(safe-area-inset-bottom));border-top:1px solid var(--linea);display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center;justify-content:space-between;font-size:13px;color:var(--grigio)}
+footer img{width:110px;height:auto}
+footer nav{display:flex;gap:20px}
+footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-height:44px}
+
+/* ---------- comparsa ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .apertura picture img{animation:respiro 14s cubic-bezier(.16,1,.3,1) both}
+  @keyframes respiro{from{transform:scale(1.08)}to{transform:scale(1)}}
+  .apertura .testo>*{animation:sale .9s cubic-bezier(.16,1,.3,1) both}
+  .apertura .testo>*:nth-child(2){animation-delay:.12s}
+  .apertura .testo>*:nth-child(3){animation-delay:.24s}
+  .apertura .testo>*:nth-child(4){animation-delay:.36s}
+  @keyframes sale{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .compare{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0)*70ms)}
+  .compare.visto{opacity:1;transform:none}
+}
+
+/* ---------- computer ---------- */
+@media (min-width:768px){
+  .testata img{width:150px}
+  .apertura{align-items:center}
+  .apertura .testo{padding-bottom:0;padding-top:80px}
+  .apertura::after{background:linear-gradient(90deg,rgba(13,13,13,.92) 0%,rgba(13,13,13,.7) 38%,rgba(13,13,13,0) 70%),linear-gradient(0deg,var(--nero) 0%,rgba(13,13,13,0) 25%)}
+  section{padding:110px var(--g)}
+  .strade{grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:240px 240px}
+  .strada.foto{grid-column:auto;grid-row:span 2;min-height:0}
+  .strada.foto.due{grid-row:auto;grid-column:span 2}
+  .strada.foto.mezza{grid-row:auto;min-height:0}
+  .strada{min-height:0}
+  .passi{grid-template-columns:repeat(3,1fr);gap:40px}
+  .passi li{grid-template-columns:1fr;gap:10px}
+  .chi{grid-template-columns:1fr 1fr;align-items:center;gap:72px}
+  .wrap{max-width:1280px;margin:0 auto}
+}
+
+/* ---------- stima ---------- */
+.stima{background:var(--nero-2);border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+.stima-in{display:grid;gap:28px}
+.stima-lato p{color:var(--grigio);margin-top:14px;max-width:40ch}
+.stima-lato .foto-v{display:none;margin-top:28px;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3}
+.stima-lato .foto-v img{width:100%;height:100%;object-fit:cover}
+.scheda{background:var(--nero);border:1px solid var(--linea);border-radius:var(--r);padding:clamp(20px,4vw,36px)}
+.tappe{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:0 0 10px;padding:0}
+.tappe li{border-top:3px solid var(--nero-3);padding-top:9px;color:var(--grigio);font:500 12px/1.2 var(--sans);transition:border-color .35s,color .35s}
+.tappe b{display:block;font:400 22px/1 var(--serif);margin-bottom:3px}
+.tappe li.fatta{border-color:var(--cobalto);color:var(--bianco)}
+.tappe li.ora{border-color:var(--bianco);color:var(--bianco)}
+.contatore{font:500 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--grigio);margin-bottom:22px}
+.contatore b{color:var(--cobalto-chiaro);font-weight:600}
+.passo{display:none}
+.passo.attivo{display:block;animation:entra .45s cubic-bezier(.16,1,.3,1)}
+@keyframes entra{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.passo.attivo{animation:none}.tappe li{transition:none}}
+.passo h3:focus{outline:none}
+.passo h3{font:400 clamp(24px,5.5vw,32px)/1.15 var(--serif);margin-bottom:6px}
+.passo .aiuto{color:var(--grigio);font-size:15px;margin-bottom:20px}
+.opzioni{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.opzioni.una{grid-template-columns:1fr}
+.opz.tutta{grid-column:1/-1}
+.opzioni.zone label{padding:13px 14px}
+.opz{position:relative}
+.opz input{position:absolute;opacity:0;pointer-events:none}
+.opz label{display:block;height:100%;padding:15px 16px;border:1px solid rgba(244,244,242,.22);border-radius:var(--r);cursor:pointer;font-size:16px;transition:border-color .2s,background .2s}
+.opz label small{display:block;color:var(--grigio);font-size:13px;margin-top:3px}
+.opz input:checked+label{border-color:var(--bianco);background:var(--nero-3)}
+.opz input:focus-visible+label{outline:2px solid var(--cobalto);outline-offset:2px}
+.mq{display:flex;align-items:baseline;gap:10px}
+.mq input{width:150px;background:var(--nero-2);border:1px solid rgba(244,244,242,.28);border-radius:var(--r);color:var(--bianco);font:400 34px/1 var(--serif);padding:12px 14px}
+.mq input:focus{outline:none;border-color:var(--bianco)}
+.mq span{font-size:18px;color:var(--grigio)}
+.si-no{margin-top:22px}
+.si-no[hidden]{display:none}
+.stima.aperta{animation:entra .5s cubic-bezier(.16,1,.3,1)}
+@media (prefers-reduced-motion:reduce){.stima.aperta{animation:none}}
+.comandi{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:12px}
+.comandi .bottone{margin-top:0}
+.indietro{min-height:44px;background:none;border:0;color:var(--grigio);font:500 15px var(--sans);cursor:pointer;padding:10px 0}
+.indietro:hover{color:var(--bianco)}
+.indietro[hidden]{visibility:hidden;display:block}
+.risultato .cifra{font:400 clamp(34px,8vw,52px)/1.05 var(--serif);margin:8px 0 6px}
+.risultato .cifra em{font-style:normal;color:var(--grigio);font-size:.55em;display:block;margin-bottom:4px;font-family:var(--sans)}
+.risultato .mqp{color:var(--grigio);font-size:15px}
+.risultato .avviso{font-size:13px;color:var(--grigio);margin-top:16px;padding-top:16px;border-top:1px solid var(--linea)}
+.visita{margin-top:28px}
+.visita h4{font:400 24px/1.2 var(--serif)}
+.visita>p{color:var(--grigio);font-size:15px;margin-top:6px}
+.giorni,.orari{display:grid;gap:8px;margin-top:14px}
+.giorni{grid-template-columns:repeat(5,1fr)}
+.orari{grid-template-columns:repeat(3,1fr)}
+.giorni label,.orari label{text-align:center;padding:10px 2px;font-size:13px}
+.giorni label b{display:block;font:500 20px/1.1 var(--serif)}
+.visita .campo{margin-top:16px}
+.visita .consenso{margin-top:16px}
+.prenotata{display:none}
+.prenotata h3{font:400 30px/1.15 var(--serif)}
+.prenotata p{color:var(--grigio);margin-top:10px}
+.scheda.fatto .passo{display:none}.scheda.fatto .tappe,.scheda.fatto .contatore,.scheda.fatto .comandi{display:none}.scheda.fatto .prenotata{display:block}
+.scheda.alla-fine #avanti{display:none}
+@media (min-width:768px){
+  .stima-in{grid-template-columns:5fr 7fr;gap:64px;align-items:start}
+  .stima-lato{position:sticky;top:40px}
+  .stima-lato .foto-v{display:block}
+  .giorni{grid-template-columns:repeat(5,1fr)}
+}
+.giro{position:relative;height:1.25em;margin-bottom:26px;padding-left:.42em;font:400 clamp(34px,7vw,56px)/1.15 var(--serif);color:var(--bianco)}
+.giro::before{content:"";position:absolute;left:0;top:.14em;bottom:.1em;width:max(4px,.075em);background:var(--cobalto)}
+.giro span{position:absolute;left:.42em;top:0;white-space:nowrap;opacity:0;transform:translateY(.35em);transition:opacity .15s ease-out,transform .24s cubic-bezier(.16,1,.3,1)}
+.giro span.su{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.giro span{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="testata">
+  <img src="img/aurea-logo.png" alt="Aurea Immobiliare" width="520" height="306">
+  <a class="tel" href="#contatti">Contattaci</a>
+</header>
+
+<main>
+  <section class="apertura" style="padding:0">
+    <picture>
+      <source media="(min-width:768px)" type="image/webp" srcset="img/hero.webp">
+      <source media="(min-width:768px)" srcset="img/hero.jpg">
+      <source type="image/webp" srcset="img/hero-m.webp">
+      <img src="img/hero-m.jpg" alt="Un salotto romano la sera, con la poltrona accanto alla finestra aperta sui palazzi di Prati" width="650" height="752" fetchpriority="high">
+    </picture>
+    <div class="testo wrap" style="margin:0">
+      <span class="premio-tag">Per chi si allena all'Urbe</span>
+      <h1>Vendi casa.<br>Ti regaliamo <em>un anno</em> all'Urbe.</h1>
+      <p>Vale anche se ci segnali chi vende. L'abbonamento puoi tenerlo o regalarlo.</p>
+      <a class="bottone" href="#strade">Scegli cosa ti serve
+        <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z"/></svg></a>
+    </div>
+  </section>
+
+  <section id="strade" class="wrap">
+    <h2 class="compare">Da dove <em>partiamo?</em></h2>
+    <div class="strade">
+      <button class="strada foto compare" data-scelta="vendo" style="--i:0">
+        <picture><source type="image/webp" srcset="img/vendo-640.webp 640w, img/vendo.webp 700w" sizes="(max-width:767px) 100vw, 50vw"><img src="img/vendo.jpg" alt="" loading="lazy" width="700" height="929"></picture>
+        <b>Vendo casa</b>
+        <span>Ti seguiamo dalla valutazione al rogito.</span>
+        <em class="premio">Un anno all'Urbe in regalo</em>
+      </button>
+      <button class="strada foto mezza compare" data-scelta="segnalo" style="--i:1">
+        <picture><source type="image/webp" srcset="img/segnalo-640.webp 640w, img/segnalo.webp 800w" sizes="(max-width:767px) 100vw, 50vw"><img src="img/segnalo.jpg" alt="" loading="lazy" width="800" height="603"></picture>
+        <b>Conosco chi vende</b>
+        <span>Se vende con noi, l'anno all'Urbe è tuo.</span>
+        <em class="premio">Un anno all'Urbe in regalo</em>
+      </button>
+      <button class="strada foto mezza compare" data-scelta="valuto" style="--i:2">
+        <picture><source type="image/webp" srcset="img/valuto-640.webp 640w, img/valuto.webp 800w" sizes="(max-width:767px) 100vw, 50vw"><img src="img/valuto.jpg" alt="" loading="lazy" width="800" height="603"></picture>
+        <b>Quanto vale casa mia?</b>
+        <span>Una stima gratuita, senza impegno.</span>
+      </button>
+      <button class="strada foto due compare" data-scelta="compro" style="--i:3">
+        <picture><source type="image/webp" srcset="img/cerco-640.webp 640w, img/cerco.webp 1200w" sizes="(max-width:767px) 100vw, 50vw"><img src="img/cerco.jpg" alt="" loading="lazy" width="1200" height="671" style="object-position:50% 40%"></picture>
+        <b>Cerco casa</b>
+        <span>Dicci zona e budget, ti mandiamo solo case che fanno per te.</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="stima" id="stima" hidden>
+    <div class="stima-in wrap">
+      <div class="stima-lato compare">
+        <h2>Quanto vale <em>casa tua?</em></h2>
+        <p>Cinque domande e hai subito una stima. Poi, se vuoi, fissiamo la visita e ti diamo il valore preciso.</p>
+        <div class="foto-v"><picture><source type="image/webp" srcset="img/valuto-640.webp 640w, img/valuto.webp 800w" sizes="(max-width:767px) 100vw, 50vw"><img src="img/valuto.jpg" alt="Una pianta di casa sul tavolo con metro e occhiali" loading="lazy" width="800" height="603"></picture></div>
+      </div>
+
+      <form class="scheda compare" id="scheda" novalidate>
+        <ol class="tappe" aria-label="I 5 passi per la stima">
+          <li class="ora"><b>1</b>Zona</li><li><b>2</b>Metri</li><li><b>3</b>Piano</li><li><b>4</b>Stato</li><li><b>5</b>Extra</li>
+        </ol>
+        <p class="contatore" aria-live="polite">Passo <b>1</b> di 5</p>
+
+        <div class="passo attivo" data-passo="1">
+          <h3>Dove si trova?</h3>
+          <p class="aiuto">Le zone intorno all'Urbe, da Prati a Monte Mario.</p>
+          <div class="opzioni zone">
+            <div class="opz"><input type="radio" name="zona" id="z-prati" value="prati"><label for="z-prati">Prati e Borgo<small>Cola di Rienzo, Cavour, San Pietro</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-trionfale" value="trionfale"><label for="z-trionfale">Trionfale<small>Candia, Ottaviano, Cipro</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-vittoria" value="vittoria"><label for="z-vittoria">Della Vittoria<small>Mazzini, Delle Milizie, Clodio</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-aurelio" value="aurelio"><label for="z-aurelio">Aurelio<small>Gregorio VII, Baldo degli Ubaldi</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-balduina" value="balduina"><label for="z-balduina">Balduina<small>Medaglie d'Oro, Belsito</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-igea" value="igea"><label for="z-igea">Trionfale alto<small>Igea, Mario Fani, Pineta Sacchetti</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-montemario" value="montemario"><label for="z-montemario">Monte Mario<small>Camilluccia, Via Augusto Conti</small></label></div>
+            <div class="opz"><input type="radio" name="zona" id="z-flaminio" value="flaminio"><label for="z-flaminio">Flaminio<small>Piazza Mancini, Piazza della Marina</small></label></div>
+            <div class="opz tutta"><input type="radio" name="zona" id="z-altra" value="altra"><label for="z-altra">Un'altra zona<small>La valutiamo noi, di persona</small></label></div>
+          </div>
+        </div>
+
+        <div class="passo" data-passo="2">
+          <h3>Quanti metri quadri?</h3>
+          <p class="aiuto">Quelli del rogito o della planimetria. Va bene anche a occhio.</p>
+          <div class="mq"><input type="number" id="mq" inputmode="numeric" enterkeyhint="next" min="20" max="600" step="1" aria-label="Metri quadri"><span>m²</span></div>
+          <span class="errore" id="e-mq"></span>
+        </div>
+
+        <div class="passo" data-passo="3">
+          <h3>A che piano?</h3>
+          <p class="aiuto">&nbsp;</p>
+          <div class="opzioni">
+            <div class="opz"><input type="radio" name="piano" id="p-terra" value="terra"><label for="p-terra">Terra o rialzato</label></div>
+            <div class="opz"><input type="radio" name="piano" id="p-basso" value="basso"><label for="p-basso">1° o 2°</label></div>
+            <div class="opz"><input type="radio" name="piano" id="p-alto" value="alto"><label for="p-alto">Dal 3° in su</label></div>
+            <div class="opz"><input type="radio" name="piano" id="p-attico" value="attico"><label for="p-attico">Attico</label></div>
+          </div>
+          <div class="si-no" hidden>
+            <p class="aiuto" style="margin-bottom:10px">C'è l'ascensore?</p>
+            <div class="opzioni">
+              <div class="opz"><input type="radio" name="ascensore" id="a-si" value="si"><label for="a-si">Sì</label></div>
+              <div class="opz"><input type="radio" name="ascensore" id="a-no" value="no"><label for="a-no">No</label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="passo" data-passo="4">
+          <h3>Com'è messa?</h3>
+          <p class="aiuto">&nbsp;</p>
+          <div class="opzioni una">
+            <div class="opz"><input type="radio" name="stato" id="st-r" value="ristrutturare"><label for="st-r">Da ristrutturare<small>Impianti e bagni da rifare</small></label></div>
+            <div class="opz"><input type="radio" name="stato" id="st-b" value="buono"><label for="st-b">In buono stato<small>Si può abitare così</small></label></div>
+            <div class="opz"><input type="radio" name="stato" id="st-n" value="ristrutturato"><label for="st-n">Ristrutturata da poco<small>Negli ultimi dieci anni</small></label></div>
+          </div>
+        </div>
+
+        <div class="passo" data-passo="5">
+          <h3>Cosa c'è in più?</h3>
+          <p class="aiuto">Scegli tutto quello che c'è, oppure vai avanti.</p>
+          <div class="opzioni">
+            <div class="opz"><input type="checkbox" name="esterni" id="x-balcone" value="balcone"><label for="x-balcone">Balcone</label></div>
+            <div class="opz"><input type="checkbox" name="esterni" id="x-terrazzo" value="terrazzo"><label for="x-terrazzo">Terrazzo</label></div>
+            <div class="opz"><input type="checkbox" name="esterni" id="x-box" value="box"><label for="x-box">Box o posto auto</label></div>
+            <div class="opz"><input type="checkbox" name="esterni" id="x-cantina" value="cantina"><label for="x-cantina">Cantina</label></div>
+          </div>
+        </div>
+
+        <div class="passo risultato" data-passo="6" aria-live="polite">
+          <div id="r-numero">
+            <p class="aiuto" style="margin:0">Con i dati che ci hai dato, casa tua vale tra</p>
+            <p class="cifra"><span id="r-da"></span> <em style="display:inline;font-size:.5em">e</em> <span id="r-a" style="white-space:nowrap"></span></p>
+            <p class="mqp">Circa <span id="r-mq"></span> al metro quadro.</p>
+          </div>
+          <div id="r-altra" hidden>
+            <h3>Questa zona la valutiamo di persona</h3>
+            <p class="aiuto">Non abbiamo ancora dati abbastanza precisi per darti un numero online. Passiamo noi a vederla.</p>
+          </div>
+
+          <div class="visita">
+            <h4>Vuoi il valore preciso?</h4>
+            <p>Un nostro agente viene a vederla, gratis e senza impegno.</p>
+            <div class="giorni" id="giorni" role="radiogroup" aria-label="Giorno"></div>
+            <div class="orari" id="orari" role="radiogroup" aria-label="Orario"></div>
+            <span class="errore" id="e-quando"></span>
+            <div class="campo"><label for="v-nome">Nome</label><input id="v-nome" autocomplete="given-name" enterkeyhint="next"><span class="errore" id="e-vnome"></span></div>
+            <div class="campo"><label for="v-tel">Telefono</label><input id="v-tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next"><span class="errore" id="e-vtel"></span></div>
+            <div class="campo"><label for="v-via">Indirizzo della casa</label><input id="v-via" autocomplete="street-address" placeholder="Via e numero civico"><small>Facoltativo, ce lo puoi dire al telefono</small></div>
+            <label class="consenso"><input type="checkbox" id="v-privacy"><span>Ho letto l'<a href="#privacy-testo">informativa privacy</a> e accetto di essere ricontattato da Aurea Immobiliare.</span></label>
+            <span class="errore" id="e-vprivacy"></span>
+            <button class="bottone" type="submit" style="width:100%">Prenota la visita</button>
+          </div>
+          <p class="avviso">Stima indicativa, calcolata sulle quotazioni dell'Agenzia delle Entrate e sulle risposte che ci hai dato. Non è una perizia: il valore preciso te lo diamo dopo la visita.</p>
+        </div>
+
+        <div class="prenotata" role="status" aria-live="polite">
+          <h3>Ti aspettiamo, <span id="pr-nome"></span>.</h3>
+          <p id="pr-quando"></p>
+          <p>Ti chiamiamo prima per confermare.</p>
+        </div>
+
+        <div class="comandi">
+          <button type="button" class="indietro" id="indietro" hidden>Indietro</button>
+          <button type="button" class="bottone" id="avanti">Avanti</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="regalo">
+    <div class="wrap">
+      <h2 class="compare">Come funziona <em>il regalo</em></h2>
+      <ol class="passi">
+        <li class="compare" style="--i:0"><div><b>Ci scrivi</b><span>Per la tua casa o per quella di un amico, parente o vicino.</span></div></li>
+        <li class="compare" style="--i:1"><div><b>Vendiamo la casa</b><span>Ci occupiamo di tutto noi, fino al notaio.</span></div></li>
+        <li class="compare" style="--i:2"><div><b>Ricevi l'abbonamento</b><span>Un anno all'Urbe Roma, per te o per chi vuoi tu.</span></div></li>
+      </ol>
+      <p class="nota compare">L'abbonamento arriva a vendita conclusa. <a href="#regolamento">Leggi il regolamento</a>.</p>
+    </div>
+  </section>
+
+  <section id="contatti" class="wrap">
+    <div class="modulo-wrap" id="modulo">
+      <h2 class="compare">Ti richiamiamo <em>noi</em></h2>
+      <p class="compare">Lasciaci nome e numero. Ti chiamiamo entro un giorno lavorativo.</p>
+      <form id="contatto" novalidate>
+        <fieldset>
+          <legend>Di cosa vuoi parlarci?</legend>
+          <div class="scelte">
+            <input type="radio" name="scelta" id="s-vendo" value="vendo" checked><label for="s-vendo">Vendo casa</label>
+            <input type="radio" name="scelta" id="s-segnalo" value="segnalo"><label for="s-segnalo">Conosco chi vende</label>
+            <input type="radio" name="scelta" id="s-valuto" value="valuto"><label for="s-valuto">Quanto vale</label>
+            <input type="radio" name="scelta" id="s-compro" value="compro"><label for="s-compro">Cerco casa</label>
+          </div>
+        </fieldset>
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" autocomplete="given-name" enterkeyhint="next" required>
+          <span class="errore" id="e-nome"></span>
+        </div>
+        <div class="campo">
+          <label for="tel">Telefono</label>
+          <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" required>
+          <span class="errore" id="e-tel"></span>
+        </div>
+        <div class="campo" id="c-zona">
+          <label for="zona" id="l-zona">Dov'è la casa?</label>
+          <input id="zona" name="zona" placeholder="Via o quartiere">
+          <small>Facoltativo</small>
+        </div>
+        <label class="consenso"><input type="checkbox" id="privacy" required>
+          <span>Ho letto l'<a href="#privacy-testo">informativa privacy</a> e accetto di essere ricontattato da Aurea Immobiliare.</span></label>
+        <span class="errore" id="e-privacy"></span>
+        <input type="hidden" name="video" id="video">
+        <div class="invio">
+          <button class="bottone" type="submit">Richiamatemi</button>
+          <a class="wa" href="#" data-segnaposto="numero WhatsApp">Preferisci WhatsApp?</a>
+        </div>
+      </form>
+      <div class="grazie" role="status" aria-live="polite">
+        <h3>Grazie, <span id="g-nome"></span>.</h3>
+        <p>Ti chiamiamo entro un giorno lavorativo. Ci vediamo all'Urbe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chi wrap">
+    <div class="foto-chiavi compare"><picture><source type="image/webp" srcset="img/chiavi-640.webp 640w, img/chiavi.webp 1000w" sizes="(max-width:767px) 100vw, 50vw"><img src="img/chiavi.jpg" alt="Un agente consegna le chiavi di casa con il portachiavi a casetta" loading="lazy" width="1000" height="753"></picture></div>
+    <div class="compare">
+      <p class="giro" aria-hidden="true"><span>Compravendita</span><span>Mutuo</span><span>Notaio</span><span>Progetto</span><span>Lavori</span><span>Arredo</span><span>Domotica</span></p>
+      <h2>A due passi <em>dall'Urbe</em></h2>
+      <p>Siamo un'agenzia di Prati. Seguiamo la casa in tutto: vendita, mutuo, notaio, lavori.</p>
+      <ul class="servizi">
+        <li>Compravendite</li><li>Affitti, anche brevi</li><li>Investimenti</li><li>Mutui</li><li>Assistenza legale e notarile</li>
+        <li>Polizze casa</li><li>Progettazione</li><li>Ristrutturazioni</li><li>Domotica e pannelli solari</li>
+      </ul>
+      <p class="indirizzo">Aurea Immobiliare<br><a href="https://maps.google.com/?q=Via+Candia+105+Roma" target="_blank" rel="noopener">Via Candia 105, Roma</a></p>
+    </div>
+  </section>
+</main>
+
+<a class="barra-telefono" href="#stima" id="barra" aria-hidden="true" tabindex="-1"><span>Quanto vale casa tua?</span> <b>Scoprilo in 1 minuto</b></a>
+
+<footer>
+  <img src="img/aurea-logo.png" alt="Aurea Immobiliare" width="520" height="306" loading="lazy">
+  <span>Aurea Immobiliare · P.IVA [da inserire]</span>
+  <nav><a href="#privacy-testo" id="privacy-testo">Privacy</a><a href="#regolamento" id="regolamento">Regolamento</a></nav>
+</footer>
+
+<script>
+(() => {
+  const html = document.documentElement;
+  // Da quale video arriva la persona: il QR di ogni video aggiunge ?v=armadietto, ?v=tornello, ...
+  const v = new URLSearchParams(location.search).get('v') || '';
+  document.getElementById('video').value = v.slice(0, 30);
+
+  const form = document.getElementById('contatto');
+  const zona = document.getElementById('c-zona');
+  const lZona = document.getElementById('l-zona');
+  const etichette = {vendo: "Dov'è la casa?", valuto: "Dov'è la casa?", segnalo: 'Dove si trova la casa?', compro: 'In che zona cerchi?'};
+  const aggiorna = () => {
+    const s = form.scelta.value;
+    lZona.textContent = etichette[s] || etichette.vendo;
+  };
+  form.addEventListener('change', aggiorna);
+
+  // Le quattro strade: scelgono la voce del modulo e portano lì
+  // La stima compare solo quando la si chiede (riquadro «Quanto vale casa mia?» o barra in basso)
+  function apriStima() {
+    const st = document.getElementById('stima');
+    if (st.hidden) { st.hidden = false; st.classList.add('aperta'); }
+    st.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }
+  document.getElementById('barra')?.addEventListener('click', e => { e.preventDefault(); apriStima(); });
+  document.querySelectorAll('[data-scelta]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.scelta === 'valuto') {   // chi vuole sapere quanto vale va alla stima, non al modulo
+      apriStima();
+      return;
+    }
+    const r = document.getElementById('s-' + b.dataset.scelta);
+    if (r) { r.checked = true; aggiorna(); }
+    document.getElementById('modulo').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    setTimeout(() => document.getElementById('nome').focus({preventScroll: true}), 600);
+  }));
+
+  const errore = (id, msg) => { document.getElementById('e-' + id).textContent = msg; };
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const nome = form.nome.value.trim();
+    const tel = form.tel.value.replace(/[\s.\-\/]/g, '');
+    let ok = true;
+    errore('nome', ''); errore('tel', ''); errore('privacy', '');
+    if (nome.length < 2) { errore('nome', 'Scrivi il tuo nome.'); ok = false; }
+    if (!/^(\+|00)?\d{8,14}$/.test(tel)) { errore('tel', 'Controlla il numero: servono almeno 8 cifre.'); ok = false; }
+    if (!document.getElementById('privacy').checked) { errore('privacy', "Per richiamarti ci serve il consenso."); ok = false; }
+    if (!ok) { form.querySelector('.errore:not(:empty)')?.previousElementSibling?.focus?.(); return; }
+    // BOZZA: qui andrà l'invio vero (mail all'agenzia o gestionale). Ora mostra solo il grazie.
+    document.getElementById('g-nome').textContent = nome.split(' ')[0];
+    document.getElementById('modulo').classList.add('inviato');
+  });
+
+  // Comparsa delle sezioni quando entrano nello schermo
+  const els = document.querySelectorAll('.compare');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('visto'); io.unobserve(x.target); } }), {threshold: .15});
+    els.forEach(el => io.observe(el));
+  } else els.forEach(el => el.classList.add('visto'));
+})();
+</script>
+<script src="stima.js"></script>
+<script>
+/* Stima a passi + prenotazione della visita. BOZZA: niente viene inviato; nel sito vero la richiesta va
+   al gestionale o alla mail dell'agenzia e gli orari liberi arrivano dal calendario di Aurea. */
+(() => {
+  const f = document.getElementById('scheda');
+  if (!f) return;
+  if (!window.Stima) {
+    f.innerHTML = '<p class="aiuto" style="margin:0">La stima online ora non è disponibile. <a href="#contatti">Lasciaci il numero</a> e te la facciamo noi.</p>';
+    return;
+  }
+  const passi = [...f.querySelectorAll('.passo')];
+  const tappe = [...f.querySelectorAll('.tappe li')], contatore = f.querySelector('.contatore');
+  const avanti = document.getElementById('avanti'), indietro = document.getElementById('indietro');
+  const num = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');   // 5950 -> 5.950 (Intl non mette il punto sotto 10.000)
+  const euro = n => num(n) + ' €';
+  const val = n => (f.querySelector(`input[name="${n}"]:checked`) || {}).value;
+  const err = (id, m) => { const e = document.getElementById(id); if (e) e.textContent = m; };
+  let n = 1, avviata = false;
+
+  function vai(k) {
+    n = k;
+    passi.forEach(p => p.classList.toggle('attivo', +p.dataset.passo === n));
+    tappe.forEach((t, i) => { t.classList.toggle('fatta', i + 1 < n); t.classList.toggle('ora', i + 1 === n); });
+    contatore.innerHTML = n === 6 ? 'Fatto: <b>5</b> passi su 5' : `Passo <b>${n}</b> di 5`;
+    indietro.hidden = n === 1;
+    f.classList.toggle('alla-fine', n === 6);
+    avanti.textContent = n === 5 ? 'Vedi la stima' : 'Avanti';
+    avanti.style.display = (n === 2 || n === 5) ? '' : 'none';
+    const primo = passi[n - 1].querySelector('input:not([type=hidden])');
+    if (primo && n === 2) primo.focus({preventScroll: true});
+    else if (avviata) { const h = [...passi[n - 1].querySelectorAll('h3')].find(x => x.offsetParent); if (h) { h.tabIndex = -1; h.focus({preventScroll: true}); } }
+    avviata = true;
+    const cima = f.getBoundingClientRect().top;
+    if (k !== 1 || cima < 0) if (cima < 0 || cima > innerHeight * 0.5)
+      f.scrollIntoView({block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }
+
+  function calcola() {
+    const zona = val('zona');
+    const altra = zona === 'altra';
+    document.getElementById('r-numero').hidden = altra;
+    document.getElementById('r-altra').hidden = !altra;
+    if (altra) return true;
+    const r = Stima.stima({
+      zona, mq: document.getElementById('mq').value, piano: val('piano'), ascensore: val('ascensore') !== 'no',
+      stato: val('stato'), esterni: [...f.querySelectorAll('input[name=esterni]:checked')].map(i => i.value),
+    });
+    if (r.errore) { vai(r.errore === 'mq' ? 2 : r.errore === 'piano' ? 3 : r.errore === 'stato' ? 4 : 1); return false; }
+    document.getElementById('r-da').textContent = num(r.da);
+    document.getElementById('r-a').textContent = euro(r.a);
+    document.getElementById('r-mq').textContent = euro(r.mq_prezzo);
+    f.dataset.stima = r.da + '-' + r.a;
+    return true;
+  }
+
+  function prossimo() {
+    if (n === 1) { if (!val('zona')) return; if (val('zona') === 'altra') { calcola(); return vai(6); } }
+    if (n === 2) {
+      const mq = Number(document.getElementById('mq').value);
+      if (!(mq >= Stima.MQ_MIN && mq <= Stima.MQ_MAX)) { err('e-mq', `Scrivi un numero tra ${Stima.MQ_MIN} e ${Stima.MQ_MAX}.`); return; }
+      err('e-mq', '');
+    }
+    if (n === 3) {
+      const p = val('piano');
+      if (!p) return;
+      if ((p === 'alto' || p === 'attico') && !val('ascensore')) return;
+    }
+    if (n === 4 && !val('stato')) return;
+    if (n === 5) { if (calcola()) vai(6); return; }
+    vai(n + 1);
+  }
+  avanti.addEventListener('click', prossimo);
+  indietro.addEventListener('click', () => vai(n === 6 && val('zona') === 'altra' ? 1 : n - 1));
+  // Le domande con una sola scelta vanno avanti da sole
+  f.addEventListener('click', e => {   // click e non change: va avanti anche se si ritocca la scelta già fatta (tornando indietro)
+    if (e.target.type !== 'radio') return;
+    const t = e.target.name;
+    if (n === 3 && t === 'piano') {
+      const alto = e.target.value === 'alto' || e.target.value === 'attico';
+      const q = f.querySelector('.si-no');
+      q.hidden = !alto;
+      if (!alto) f.querySelectorAll('input[name=ascensore]').forEach(i => { i.checked = false; });
+      if (alto && !val('ascensore')) { q.querySelector('input').focus({preventScroll: true}); q.scrollIntoView({block: 'nearest', behavior: 'smooth'}); return; }
+    }
+    if ((n === 1 && t === 'zona') || (n === 3 && (t === 'piano' || t === 'ascensore')) || (n === 4 && t === 'stato')) { const da = n; setTimeout(() => { if (n === da) prossimo(); }, 220); }   // doppio tocco: avanza una volta sola
+  });
+
+  // Giorni (prossimi 10 giorni feriali) e orari della visita: PROVVISORI, da sostituire con gli orari veri di Aurea
+  const giorni = document.getElementById('giorni'), orari = document.getElementById('orari');
+  const g = new Date(); let messi = 0;
+  while (messi < 10) {
+    g.setDate(g.getDate() + 1);
+    if (g.getDay() === 0 || g.getDay() === 6) continue;
+    const id = 'g' + messi, d = `${g.getFullYear()}-${String(g.getMonth() + 1).padStart(2, '0')}-${String(g.getDate()).padStart(2, '0')}`;
+    const nomeG = g.toLocaleDateString('it-IT', {weekday: 'short'}).replace('.', '');
+    const mese = g.toLocaleDateString('it-IT', {month: 'short'}).replace('.', '');
+    giorni.insertAdjacentHTML('beforeend', `<div class="opz"><input type="radio" name="giorno" id="${id}" value="${d}" data-testo="${g.toLocaleDateString('it-IT', {weekday: 'long', day: 'numeric', month: 'long'})}"><label for="${id}">${nomeG}<b>${g.getDate()}</b>${mese}</label></div>`);
+    messi++;
+  }
+  ['10:00', '11:30', '15:00', '16:30', '18:00', '19:00'].forEach((o, i) =>
+    orari.insertAdjacentHTML('beforeend', `<div class="opz"><input type="radio" name="ora" id="o${i}" value="${o}"><label for="o${i}">${o}</label></div>`));
+
+  f.addEventListener('submit', e => {
+    e.preventDefault();
+    if (n < 6) return prossimo();       // Invio sulla tastiera = Avanti
+    const nome = document.getElementById('v-nome').value.trim();
+    const tel = document.getElementById('v-tel').value.replace(/[\s.\-\/]/g, '');
+    const giorno = f.querySelector('input[name=giorno]:checked'), ora = val('ora');
+    let ok = true;
+    ['e-quando', 'e-vnome', 'e-vtel', 'e-vprivacy'].forEach(id => err(id, ''));
+    if (!giorno || !ora) { err('e-quando', 'Scegli un giorno e un orario.'); ok = false; }
+    if (nome.length < 2) { err('e-vnome', 'Scrivi il tuo nome.'); ok = false; }
+    if (!/^(\+|00)?\d{8,14}$/.test(tel)) { err('e-vtel', 'Controlla il numero: servono almeno 8 cifre.'); ok = false; }
+    if (!document.getElementById('v-privacy').checked) { err('e-vprivacy', 'Per fissare la visita ci serve il consenso.'); ok = false; }
+    if (!ok) return;
+    // BOZZA: qui andrà l'invio (risposte, stima, giorno, ora, contatti, video di provenienza).
+    document.getElementById('pr-nome').textContent = nome.split(' ')[0];
+    document.getElementById('pr-quando').textContent = `Ci vediamo ${giorno.dataset.testo} alle ${ora}.`;
+    f.classList.add('fatto');
+  });
+  vai(1);
+})();
+</script>
+<script>
+// Barra in basso sul telefono: compare dopo la foto d'apertura, sparisce quando si vede la stima, il modulo o il fondo
+(() => {
+  const barra = document.getElementById('barra');
+  if (!barra || !('IntersectionObserver' in window)) return;
+  const visti = new Set();
+  const guarda = [document.querySelector('.apertura'), document.getElementById('stima'), document.getElementById('contatti'), document.querySelector('footer')].filter(Boolean);
+  const aggiorna = () => {
+    const su = visti.size === 0;
+    barra.classList.toggle('su', su);
+    barra.setAttribute('aria-hidden', su ? 'false' : 'true');
+    barra.tabIndex = su ? 0 : -1;
+  };
+  const io = new IntersectionObserver(voci => {
+    voci.forEach(v => v.isIntersecting ? visti.add(v.target) : visti.delete(v.target));
+    aggiorna();
+  }, {threshold: 0});
+  guarda.forEach(e => io.observe(e));
+})();
+</script>
+<script>
+/* i servizi uno alla volta, come nel video 4: una parola ogni 2 secondi */
+(() => {
+  const p = [...document.querySelectorAll('.giro span')]; if (!p.length) return;
+  let i = 0; p[0].classList.add('su');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(() => { if (document.hidden) return; p[i].classList.remove('su'); i = (i + 1) % p.length; p[i].classList.add('su'); }, 2000);
+})();
+</script>
+</body>
+</html>
