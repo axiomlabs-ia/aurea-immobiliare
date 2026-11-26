@@ -515,7 +515,7 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
 <script>
 /* Invio al Google di Aurea (Apps Script in info@): le richieste arrivano per mail a info@ e finiscono nel Foglio,
    le visite servono al resoconto del lunedì (quante scansioni da ogni video). Vuoto = bozza, non invia niente. */
-const ENDPOINT = '';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyPf0CdAH_eYHsvUQ3KSB9BCkzeIq9CWMn2X8Pxk_bDIeS9D6EpQv_z8UreUq6a4mdb/exec';
 const Aurea = (() => {
   const v = (new URLSearchParams(location.search).get('v') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30);
   let p = '', nuova = false;
