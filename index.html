@@ -726,7 +726,9 @@ const Aurea = (() => {
     const bott = f.querySelector('.visita button[type=submit]');
     f.classList.add('invio-in-corso'); bott.disabled = true;
     try {
-      await Aurea.invia({tipo: 'visita_casa', nome, tel, giorno: giorno.dataset.testo, ora, stima: f.dataset.stima || '',
+      await Aurea.invia({tipo: 'visita_casa', nome, tel, giorno: giorno.dataset.testo, data: giorno.value, ora, stima: f.dataset.stima || '',
+        casa: {zona: val('zona'), mq: document.getElementById('mq').value, piano: val('piano'), ascensore: val('ascensore'), stato: val('stato'),
+          esterni: [...f.querySelectorAll('input[name=esterni]:checked')].map(i => i.value)},
         zona: document.getElementById('v-via').value.trim() || ('Zona: ' + val('zona')), sito: document.getElementById('v-sito').value});
     } catch (_) {
       err('e-vinvio', 'Non siamo riusciti a prenotare. Controlla la connessione e riprova.');
