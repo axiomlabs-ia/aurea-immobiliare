@@ -520,11 +520,20 @@ const Aurea = (() => {
   const v = (new URLSearchParams(location.search).get('v') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30);
   let p = '', nuova = false;
   try { p = localStorage.getItem('aurea-p') || ''; if (!p) { p = Math.random().toString(36).slice(2, 12); localStorage.setItem('aurea-p', p); nuova = true; } } catch (_) {}
-  const invia = dati => ENDPOINT
-    ? fetch(ENDPOINT, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({v, p}, dati))})
-    : Promise.resolve();
+  // Apps Script risponde {ok:true|false} leggibile (text/plain evita il preflight). Successo solo se ok:true;
+  // senza ENDPOINT, errore di rete, risposta illeggibile o oltre 15 secondi: errore, e la persona può riprovare.
+  const invia = async dati => {
+    if (!ENDPOINT) throw new Error('invio non ancora attivo');
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 15000);
+    try {
+      const r = await fetch(ENDPOINT, {method: 'POST', signal: ctl.signal, headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({v, p}, dati))});
+      const j = await r.json();
+      if (!r.ok || !j.ok) throw new Error('rifiutata');
+    } finally { clearTimeout(t); }
+  };
   // una visita a sessione (ricaricare la pagina non conta due volte)
-  try { if (!sessionStorage.getItem('aurea-vista')) { sessionStorage.setItem('aurea-vista', '1'); invia({tipo: 'visita', nuova}).catch(() => {}); } } catch (_) { invia({tipo: 'visita', nuova}).catch(() => {}); }
+  const visita = () => { if (ENDPOINT) invia({tipo: 'visita', nuova}).catch(() => {}); };
+  try { if (!sessionStorage.getItem('aurea-vista')) { sessionStorage.setItem('aurea-vista', '1'); visita(); } } catch (_) { visita(); }
   return {v, invia};
 })();
 </script>
