@@ -136,6 +136,7 @@ legend{font-size:15px;font-weight:500;margin-bottom:10px}
 .chi p{color:var(--grigio);margin-top:14px;max-width:44ch}
 .servizi{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;list-style:none}
 .servizi li{font-size:14px;padding:7px 12px;border-radius:999px;background:var(--nero-3)}
+.trappola{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .indirizzo{margin-top:26px;font-size:16px;line-height:1.5}
 .indirizzo a{text-decoration:none;border-bottom:1px solid var(--cobalto)}
 
@@ -408,6 +409,8 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
             <div class="campo"><label for="v-via">Indirizzo della casa</label><input id="v-via" autocomplete="street-address" placeholder="Via e numero civico"><small>Facoltativo, ce lo puoi dire al telefono</small></div>
             <label class="consenso"><input type="checkbox" id="v-privacy"><span>Ho letto l'<a href="#privacy-testo">informativa privacy</a> e accetto di essere ricontattato da Aurea Immobiliare.</span></label>
             <span class="errore" id="e-vprivacy"></span>
+            <input class="trappola" name="sito" id="v-sito" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <span class="errore" id="e-vinvio"></span>
             <button class="bottone" type="submit" style="width:100%">Prenota la visita</button>
           </div>
           <p class="avviso">Stima indicativa, calcolata sulle quotazioni dell'Agenzia delle Entrate e sulle risposte che ci hai dato. Non è una perizia: il valore preciso te lo diamo dopo la visita.</p>
@@ -472,10 +475,12 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
           <span>Ho letto l'<a href="#privacy-testo">informativa privacy</a> e accetto di essere ricontattato da Aurea Immobiliare.</span></label>
         <span class="errore" id="e-privacy"></span>
         <input type="hidden" name="video" id="video">
+        <input class="trappola" name="sito" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="invio">
           <button class="bottone" type="submit">Richiamatemi</button>
           <a class="wa" href="#" data-segnaposto="numero WhatsApp">Preferisci WhatsApp?</a>
         </div>
+        <span class="errore" id="e-invio"></span>
       </form>
       <div class="grazie" role="status" aria-live="polite">
         <h3>Grazie, <span id="g-nome"></span>.</h3>
@@ -508,11 +513,26 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
 </footer>
 
 <script>
+/* Invio al Google di Aurea (Apps Script in info@): le richieste arrivano per mail a info@ e finiscono nel Foglio,
+   le visite servono al resoconto del lunedì (quante scansioni da ogni video). Vuoto = bozza, non invia niente. */
+const ENDPOINT = '';
+const Aurea = (() => {
+  const v = (new URLSearchParams(location.search).get('v') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 30);
+  let p = '', nuova = false;
+  try { p = localStorage.getItem('aurea-p') || ''; if (!p) { p = Math.random().toString(36).slice(2, 12); localStorage.setItem('aurea-p', p); nuova = true; } } catch (_) {}
+  const invia = dati => ENDPOINT
+    ? fetch(ENDPOINT, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({v, p}, dati))})
+    : Promise.resolve();
+  // una visita a sessione (ricaricare la pagina non conta due volte)
+  try { if (!sessionStorage.getItem('aurea-vista')) { sessionStorage.setItem('aurea-vista', '1'); invia({tipo: 'visita', nuova}).catch(() => {}); } } catch (_) { invia({tipo: 'visita', nuova}).catch(() => {}); }
+  return {v, invia};
+})();
+</script>
+<script>
 (() => {
   const html = document.documentElement;
   // Da quale video arriva la persona: il QR di ogni video aggiunge ?v=armadietto, ?v=tornello, ...
-  const v = new URLSearchParams(location.search).get('v') || '';
-  document.getElementById('video').value = v.slice(0, 30);
+  document.getElementById('video').value = Aurea.v;
 
   const form = document.getElementById('contatto');
   const zona = document.getElementById('c-zona');
@@ -544,8 +564,9 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
   }));
 
   const errore = (id, msg) => { document.getElementById('e-' + id).textContent = msg; };
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
+    if (form.classList.contains('invio-in-corso')) return;
     const nome = form.nome.value.trim();
     const tel = form.tel.value.replace(/[\s.\-\/]/g, '');
     let ok = true;
@@ -554,7 +575,15 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
     if (!/^(\+|00)?\d{8,14}$/.test(tel)) { errore('tel', 'Controlla il numero: servono almeno 8 cifre.'); ok = false; }
     if (!document.getElementById('privacy').checked) { errore('privacy', "Per richiamarti ci serve il consenso."); ok = false; }
     if (!ok) { form.querySelector('.errore:not(:empty)')?.previousElementSibling?.focus?.(); return; }
-    // BOZZA: qui andrà l'invio vero (mail all'agenzia o gestionale). Ora mostra solo il grazie.
+    errore('invio', '');
+    const bott = form.querySelector('button[type=submit]');
+    form.classList.add('invio-in-corso'); bott.disabled = true;
+    try {
+      await Aurea.invia({tipo: 'richiesta', nome, tel, scelta: form.scelta.value, zona: form.zona.value.trim(), sito: form.sito.value});
+    } catch (_) {
+      errore('invio', 'Non siamo riusciti a inviare la richiesta. Controlla la connessione e riprova.');
+      return;
+    } finally { form.classList.remove('invio-in-corso'); bott.disabled = false; }
     document.getElementById('g-nome').textContent = nome.split(' ')[0];
     document.getElementById('modulo').classList.add('inviato');
   });
@@ -610,7 +639,7 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
     const altra = zona === 'altra';
     document.getElementById('r-numero').hidden = altra;
     document.getElementById('r-altra').hidden = !altra;
-    if (altra) return true;
+    if (altra) { delete f.dataset.stima; return true; }
     const r = Stima.stima({
       zona, mq: document.getElementById('mq').value, piano: val('piano'), ascensore: val('ascensore') !== 'no',
       stato: val('stato'), esterni: [...f.querySelectorAll('input[name=esterni]:checked')].map(i => i.value),
@@ -670,9 +699,10 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
   ['10:00', '11:30', '15:00', '16:30', '18:00', '19:00'].forEach((o, i) =>
     orari.insertAdjacentHTML('beforeend', `<div class="opz"><input type="radio" name="ora" id="o${i}" value="${o}"><label for="o${i}">${o}</label></div>`));
 
-  f.addEventListener('submit', e => {
+  f.addEventListener('submit', async e => {
     e.preventDefault();
-    if (n < 6) return prossimo();       // Invio sulla tastiera = Avanti
+    if (n < 6) return prossimo();
+    if (f.classList.contains('invio-in-corso')) return;       // Invio sulla tastiera = Avanti
     const nome = document.getElementById('v-nome').value.trim();
     const tel = document.getElementById('v-tel').value.replace(/[\s.\-\/]/g, '');
     const giorno = f.querySelector('input[name=giorno]:checked'), ora = val('ora');
@@ -683,7 +713,16 @@ footer nav a,.indirizzo a,.nota a{display:inline-flex;align-items:center;min-hei
     if (!/^(\+|00)?\d{8,14}$/.test(tel)) { err('e-vtel', 'Controlla il numero: servono almeno 8 cifre.'); ok = false; }
     if (!document.getElementById('v-privacy').checked) { err('e-vprivacy', 'Per fissare la visita ci serve il consenso.'); ok = false; }
     if (!ok) return;
-    // BOZZA: qui andrà l'invio (risposte, stima, giorno, ora, contatti, video di provenienza).
+    err('e-vinvio', '');
+    const bott = f.querySelector('.visita button[type=submit]');
+    f.classList.add('invio-in-corso'); bott.disabled = true;
+    try {
+      await Aurea.invia({tipo: 'visita_casa', nome, tel, giorno: giorno.dataset.testo, ora, stima: f.dataset.stima || '',
+        zona: document.getElementById('v-via').value.trim() || ('Zona: ' + val('zona')), sito: document.getElementById('v-sito').value});
+    } catch (_) {
+      err('e-vinvio', 'Non siamo riusciti a prenotare. Controlla la connessione e riprova.');
+      return;
+    } finally { f.classList.remove('invio-in-corso'); bott.disabled = false; }
     document.getElementById('pr-nome').textContent = nome.split(' ')[0];
     document.getElementById('pr-quando').textContent = `Ci vediamo ${giorno.dataset.testo} alle ${ora}.`;
     f.classList.add('fatto');
